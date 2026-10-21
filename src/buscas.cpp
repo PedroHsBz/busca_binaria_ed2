@@ -38,14 +38,13 @@ int buscaLinear(vi &v, int x) {
 int buscaIterativa(vi &v, int x) {
     int ini = 0;
     int fim = v.size() - 1;
-    int it = 1;
+    int it = 1; // interações
 
     while (ini <= fim) {                    // ainda há candidatos
         int meio = ini + (fim - ini) / 2;   // evita overflow de (ini + fim)
 
         // teste de mesa: mostra o intervalo a cada iteração
-        cout << "  it " << it++ << ": ini=" << ini << " fim=" << fim
-             << " meio=" << meio << " v[meio]=" << v[meio] << "\n";
+        cout << "  it " << it++ << ": ini=" << ini << " fim=" << fim  << " meio=" << meio << " v[meio]=" << v[meio] << "\n";
 
         if (v[meio] == x) return meio;      // achou
         if (v[meio] < x) ini = meio + 1;    // x está à direita
@@ -61,12 +60,30 @@ int buscaRecursiva(vi &v, int x, int ini, int fim) {
     int meio = ini + (fim - ini) / 2;
 
     // teste de mesa: mostra o intervalo a cada chamada
-    cout << "  busca(" << ini << ", " << fim << ") meio=" << meio
-         << " v[meio]=" << v[meio] << "\n";
+    cout << "  busca(" << ini << ", " << fim << ") meio=" << meio << " v[meio]=" << v[meio] << "\n";
 
     if (v[meio] == x) return meio;          // caso base: achou
     if (v[meio] < x) return buscaRecursiva(v, x, meio + 1, fim);  // direita
     return buscaRecursiva(v, x, ini, meio - 1);                   // esquerda
+}
+
+// Busca no ESPAÇO DE RESPOSTA: menor r tal que r * r >= n.
+// Não há vetor: os números de 0 a n são as respostas possíveis.
+// A pergunta "r * r >= n?" é monótona: se vale para r, vale para todo
+// número maior. Então procuramos onde ela COMEÇA a valer (como um lowerBound).
+int menorRaiz(int n) {
+    int ini = 0, fim = n;                   // a resposta está entre 0 e n
+    while (ini < fim) {
+        int meio = ini + (fim - ini) / 2;
+        ll quadrado = (ll)meio * meio;      // long long: evita overflow no quadrado
+
+        // teste de mesa: mostra o intervalo a cada iteração
+        cout << "  ini=" << ini << " fim=" << fim << " r=" << meio << " r*r=" << quadrado << (quadrado >= n ? " serve" : " nao serve") << "\n";
+
+        if (quadrado >= n) fim = meio;      // serve: a resposta é meio ou menor
+        else               ini = meio + 1;  // não serve: precisa de um r maior
+    }
+    return ini;                             // ini == fim: primeiro r que serve
 }
 
 int main() {
@@ -84,6 +101,10 @@ int main() {
 
     cout << "Recursiva, x = 13:\n";
     int r3 = buscaRecursiva(v, 13, 0, v.size() - 1);
-    cout << "  resultado: " << r3 << "\n";
+    cout << "  resultado: " << r3 << "\n\n";
+
+    cout << "Espaco de resposta: menor r com r*r >= 30\n";
+    int r4 = menorRaiz(30);
+    cout << "  resultado: r = " << r4 << "\n";
     return 0;
 }

@@ -40,8 +40,7 @@ int lowerBound(vi &v, int x) {
     int ini = 0, fim = v.size();       // fim fica DE FORA: [ini, fim)
     while (ini < fim) {
         int meio = ini + (fim - ini) / 2;
-        cout << "    lower: ini=" << ini << " fim=" << fim << " meio=" << meio
-             << " v[meio]=" << v[meio] << "\n";
+        cout << "    lower: ini=" << ini << " fim=" << fim << " meio=" << meio << " v[meio]=" << v[meio] << "\n";
         if (v[meio] < x) ini = meio + 1;
         else             fim = meio;   // meio pode ser a resposta
     }
@@ -53,8 +52,7 @@ int upperBound(vi &v, int x) {
     int ini = 0, fim = v.size();
     while (ini < fim) {
         int meio = ini + (fim - ini) / 2;
-        cout << "    upper: ini=" << ini << " fim=" << fim << " meio=" << meio
-             << " v[meio]=" << v[meio] << "\n";
+        cout << "    upper: ini=" << ini << " fim=" << fim << " meio=" << meio << " v[meio]=" << v[meio] << "\n";
         if (v[meio] <= x) ini = meio + 1;
         else              fim = meio;
     }

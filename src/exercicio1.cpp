@@ -43,8 +43,7 @@ int buscaIterativa(vi &v, int x) {
     int ini = 0, fim = v.size() - 1;
     while (ini <= fim) {                    // correção 1
         int meio = ini + (fim - ini) / 2;   // correção 2
-        cout << "    ini=" << ini << " fim=" << fim << " meio=" << meio
-             << " v[meio]=" << v[meio] << "\n";
+        cout << "    ini=" << ini << " fim=" << fim << " meio=" << meio << " v[meio]=" << v[meio] << "\n";
         if (v[meio] == x) return meio;
         if (v[meio] < x) ini = meio + 1;    // correção 3
         else             fim = meio - 1;
@@ -56,14 +55,14 @@ int buscaIterativa(vi &v, int x) {
 int buscaRecursiva(vi &v, int x, int ini, int fim) {
     if (ini > fim) return -1;
     int meio = ini + (fim - ini) / 2;
-    cout << "    busca(" << ini << ", " << fim << ") meio=" << meio
-         << " v[meio]=" << v[meio] << "\n";
+    cout << "    busca(" << ini << ", " << fim << ") meio=" << meio << " v[meio]=" << v[meio] << "\n";
     if (v[meio] == x) return meio;
     if (v[meio] < x) return buscaRecursiva(v, x, meio + 1, fim);
     return buscaRecursiva(v, x, ini, meio - 1);
 }
 
 int main() {
+    IOFAST();
     int n;
     cin >> n;
     vi v(n);
