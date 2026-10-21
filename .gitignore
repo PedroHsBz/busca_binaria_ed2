@@ -1,0 +1,7 @@
+build/
+*.exe
+*.o
+buscas
+exercicio1
+exercicio2
+.idea/
